@@ -10,6 +10,7 @@ import UIKit
 class LoginController: UIViewController {
     
     // MARK: - Properties
+    private var viewModel = LoginViewModel()
     
     private let iconImage:UIImageView = {
         let iv = UIImageView(image: UIImage(named: "Instagram_logo_white"))
@@ -17,27 +18,14 @@ class LoginController: UIViewController {
         return iv
     }()
     
-    private let emailTextFiled: UITextField = {
-        let tf = UITextField()
-        tf.borderStyle = .none
-        tf.textColor = .white
-        tf.keyboardAppearance = .dark
+    private let emailTextFiled: CustomTextFiled = {
+        let tf = CustomTextFiled(placeholder: "Email")
         tf.keyboardType = .emailAddress
-        tf.backgroundColor = UIColor(white: 1, alpha:  0.1)
-        tf.setHeight( 50)
-        tf.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [.foregroundColor: UIColor(white: 1.0, alpha: 0.7)])
         return tf
     }()
     
-    private let passwordTextFiled: UITextField = {
-        let tf = UITextField()
-        tf.borderStyle = .none
-        tf.textColor = .white
-        tf.keyboardAppearance = .dark
-        tf.keyboardType = .emailAddress
-        tf.backgroundColor = UIColor(white: 1, alpha:  0.1)
-        tf.setHeight( 50)
-        tf.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [.foregroundColor: UIColor(white: 1.0, alpha: 0.7)])
+    private let passwordTextFiled: CustomTextFiled = {
+        let tf = CustomTextFiled(placeholder: "Password")
         tf.isSecureTextEntry = true
         return tf
     }()
@@ -46,44 +34,55 @@ class LoginController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("Log in", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemPurple
+        button.backgroundColor = .systemPurple.withAlphaComponent(0.5)
         button.layer.cornerRadius = 5
         button.setHeight( 50)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.isEnabled = false
         return button
     }()
+    
     private let forgotPasswordutton: UIButton = {
         let button = UIButton(type: .system)
-        let atts: [NSAttributedString.Key : Any] = [.foregroundColor: UIColor(white: 1.0, alpha: 0.7), .font : UIFont.systemFont(ofSize: 16)]
-        let attributedTitle = NSMutableAttributedString(string: "Forgot your password?  ", attributes: atts)
-        
-        let boldAtts: [NSAttributedString.Key : Any] = [.foregroundColor: UIColor(white: 1.0, alpha: 0.7), .font : UIFont.boldSystemFont(ofSize: 16)]
-
-        attributedTitle.append(NSAttributedString(string: "Get help and Sign in", attributes: boldAtts))
-        button.setAttributedTitle(attributedTitle, for: .normal)
+        button.attributedTitle(firstPart: "Forgot your password? ", secondPart: "Get help Signing in.")
         return button
     }()
     
     private let dontHaveAccountButton: UIButton = {
         let button = UIButton(type: .system)
-        let atts: [NSAttributedString.Key : Any] = [.foregroundColor: UIColor(white: 1.0, alpha: 0.7), .font : UIFont.systemFont(ofSize: 16)]
-        let attributedTitle = NSMutableAttributedString(string: "Don't have an account?  ", attributes: atts)
-        
-        let boldAtts: [NSAttributedString.Key : Any] = [.foregroundColor: UIColor(white: 1.0, alpha: 0.7), .font : UIFont.boldSystemFont(ofSize: 16)]
+        button.attributedTitle(firstPart: "Don't have an account?  ", secondPart: "Sign Up")
+        button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
 
-        attributedTitle.append(NSAttributedString(string: "Sign Up", attributes: boldAtts))
-        button.setAttributedTitle(attributedTitle, for: .normal)
         return button
     }()
     
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configureNotificationObsersers()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func handleShowSignUp() {
+        let vc = RegistrationController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func textDidChange(sender: UITextField) {
+        if sender == emailTextFiled {
+            viewModel.email = sender.text
+        } else {
+            viewModel.password = sender.text
+        }
+        
+        updateForm()
     }
     
     // MARK: - Helpers
@@ -92,11 +91,7 @@ class LoginController: UIViewController {
         navigationController?.navigationBar.isHidden  = true
         navigationController?.navigationBar.barStyle = .black
         
-        let gradient = CAGradientLayer()
-        gradient.colors = [UIColor.systemPurple.cgColor, UIColor.systemBlue.cgColor]
-        gradient.locations = [0, 1]
-        view.layer.addSublayer(gradient)
-        gradient.frame = view.frame
+        configureGradientLayer()
         
         view.addSubview(iconImage)
         iconImage.centerX(inView: view)
@@ -113,6 +108,21 @@ class LoginController: UIViewController {
         view.addSubview(dontHaveAccountButton)
         dontHaveAccountButton.centerX(inView: view)
         dontHaveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor)
-        
+    }
+    
+    func configureNotificationObsersers() {
+        emailTextFiled.addTarget(self, action: #selector(textDidChange(sender:)), for: .editingChanged)
+        passwordTextFiled.addTarget(self, action: #selector(textDidChange(sender:)), for: .editingChanged)
+    }
+}
+
+// MARK: - FormViewModel
+
+extension LoginController: FormViewModel {
+    func updateForm() {
+        // 如何使用 viewModel
+        loginButton.backgroundColor = viewModel.buttonBackgroundColor
+        loginButton.setTitleColor(viewModel.buttonTitleColor, for: .normal)
+        loginButton.isEnabled = viewModel.formIsValid
     }
 }
