@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ProfileController.swift
 //  Instagram-iOS
 //
 //  Created by brown on 2022/3/20.
@@ -7,13 +7,10 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ProfileController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .systemOrange
     }
-
-
 }
 
