@@ -12,16 +12,14 @@ import AVFoundation
 
 // MARK: - Global functions
 
-
-internal func flippedDeviceInputForInput(_ input: AVCaptureDeviceInput) -> AVCaptureDeviceInput? {
-    let position: AVCaptureDevice.Position = (input.device.position == .front) ? .back : .front
-    guard let aDevice = AVCaptureDevice.deviceForPosition(position) else {
-        return nil
+func deviceForPosition(_ p: AVCaptureDevice.Position) -> AVCaptureDevice? {
+    for device in AVCaptureDevice.devices(for: AVMediaType.video) where device.position == p {
+        return device
     }
-    return try? AVCaptureDeviceInput(device: aDevice)
+    return nil
 }
 
-internal func thumbnailFromVideoPath(_ path: URL) -> UIImage {
+func thumbnailFromVideoPath(_ path: URL) -> UIImage {
     let asset = AVURLAsset(url: path, options: nil)
     let gen = AVAssetImageGenerator(asset: asset)
     gen.appliesPreferredTrackTransform = true
@@ -36,7 +34,7 @@ internal func thumbnailFromVideoPath(_ path: URL) -> UIImage {
     return UIImage()
 }
 
-internal func setFocusPointOnDevice(device: AVCaptureDevice, point: CGPoint) {
+func setFocusPointOnDevice(device: AVCaptureDevice, point: CGPoint) {
     do {
         try device.lockForConfiguration()
         if device.isFocusModeSupported(AVCaptureDevice.FocusMode.autoFocus) {
@@ -53,7 +51,7 @@ internal func setFocusPointOnDevice(device: AVCaptureDevice, point: CGPoint) {
     }
 }
 
-internal func setFocusPointOnCurrentDevice(_ point: CGPoint) {
+func setFocusPointOnCurrentDevice(_ point: CGPoint) {
     if let device = AVCaptureDevice.default(for: AVMediaType.video) {
         do {
             try device.lockForConfiguration()
@@ -70,4 +68,14 @@ internal func setFocusPointOnCurrentDevice(_ point: CGPoint) {
         }
         device.unlockForConfiguration()
     }
+}
+
+func toggledPositionForDevice(_ device: AVCaptureDevice) -> AVCaptureDevice.Position {
+    return (device.position == .front) ? .back : .front
+}
+
+func flippedDeviceInputForInput(_ input: AVCaptureDeviceInput) -> AVCaptureDeviceInput? {
+    let p = toggledPositionForDevice(input.device)
+    let aDevice = deviceForPosition(p)
+    return try? AVCaptureDeviceInput(device: aDevice!)
 }

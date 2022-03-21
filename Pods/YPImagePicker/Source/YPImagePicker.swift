@@ -11,50 +11,25 @@ import AVFoundation
 import Photos
 
 public protocol YPImagePickerDelegate: AnyObject {
-    func imagePickerHasNoItemsInLibrary(_ picker: YPImagePicker)
-    func shouldAddToSelection(indexPath: IndexPath, numSelections: Int) -> Bool
+    func noPhotos()
 }
 
 open class YPImagePicker: UINavigationController {
-    public typealias DidFinishPickingCompletion = (_ items: [YPMediaItem], _ cancelled: Bool) -> Void
-
-    // MARK: - Public
-
-    public weak var imagePickerDelegate: YPImagePickerDelegate?
-    public func didFinishPicking(completion: @escaping DidFinishPickingCompletion) {
-        _didFinishPicking = completion
-    }
-
-    /// Get a YPImagePicker instance with the default configuration.
-    public convenience init() {
-        self.init(configuration: YPImagePickerConfiguration.shared)
-    }
-
-    /// Get a YPImagePicker with the specified configuration.
-    public required init(configuration: YPImagePickerConfiguration) {
-        YPImagePickerConfiguration.shared = configuration
-        picker = YPPickerVC()
-        super.init(nibName: nil, bundle: nil)
-        modalPresentationStyle = .fullScreen // Force .fullScreen as iOS 13 now shows modals as cards by default.
-        picker.pickerVCDelegate = self
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
+      
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
-
+    
+    private var _didFinishPicking: (([YPMediaItem], Bool) -> Void)?
+    public func didFinishPicking(completion: @escaping (_ items: [YPMediaItem], _ cancelled: Bool) -> Void) {
+        _didFinishPicking = completion
+    }
+    public weak var imagePickerDelegate: YPImagePickerDelegate?
+    
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         return YPImagePickerConfiguration.shared.preferredStatusBarStyle
     }
-
-    // MARK: - Private
-
-    private var _didFinishPicking: DidFinishPickingCompletion?
-
+    
     // This nifty little trick enables us to call the single version of the callbacks.
     // This keeps the backwards compatibility keeps the api as simple as possible.
     // Multiple selection becomes available as an opt-in.
@@ -62,10 +37,29 @@ open class YPImagePicker: UINavigationController {
         _didFinishPicking?(items, false)
     }
     
-    private let loadingView = YPLoadingView()
+    let loadingView = YPLoadingView()
     private let picker: YPPickerVC!
-
-    override open func viewDidLoad() {
+    
+    /// Get a YPImagePicker instance with the default configuration.
+    public convenience init() {
+        self.init(configuration: YPImagePickerConfiguration.shared)
+    }
+    
+    /// Get a YPImagePicker with the specified configuration.
+    public required init(configuration: YPImagePickerConfiguration) {
+        YPImagePickerConfiguration.shared = configuration
+        picker = YPPickerVC()
+        super.init(nibName: nil, bundle: nil)
+        modalPresentationStyle = .fullScreen // Force .fullScreen as iOS 13 now shows modals as cards by default.
+        picker.imagePickerDelegate = self
+        navigationBar.tintColor = .ypLabel
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+override open func viewDidLoad() {
         super.viewDidLoad()
         picker.didClose = { [weak self] in
             self?._didFinishPicking?([], true)
@@ -73,8 +67,6 @@ open class YPImagePicker: UINavigationController {
         viewControllers = [picker]
         setupLoadingView()
         navigationBar.isTranslucent = false
-        navigationBar.tintColor = .ypLabel
-        view.backgroundColor = .ypSystemBackground
 
         picker.didSelectItems = { [weak self] items in
             // Use Fade transition instead of default push animation
@@ -115,16 +107,21 @@ open class YPImagePicker: UINavigationController {
                 }
                 
                 func showCropVC(photo: YPMediaPhoto, completion: @escaping (_ aphoto: YPMediaPhoto) -> Void) {
+                    var cropVC: YPCropVCProtocol? = nil
                     switch YPConfig.showsCrop {
-                    case .rectangle, .circle:
-                        let cropVC = YPCropVC(image: photo.image)
+                    case .none:
+                        completion(photo)
+                    case let .custom(cropper, configuration):
+                        cropVC = cropper.init(image: photo.image, configuration: configuration)
+                    case let .rectangle(ratio):
+                        cropVC = YPCropVC(image: photo.image, ratio: ratio)
+                    }
+                    if let cropVC = cropVC {
                         cropVC.didFinishCropping = { croppedImage in
                             photo.modifiedImage = croppedImage
                             completion(photo)
                         }
                         self?.pushViewController(cropVC, animated: true)
-                    default:
-                        completion(photo)
                     }
                 }
                 
@@ -157,7 +154,7 @@ open class YPImagePicker: UINavigationController {
     }
     
     deinit {
-        ypLog("Picker deinited 👍")
+        YPLog.print("Picker deinited 👍")
     }
     
     private func setupLoadingView() {
@@ -169,13 +166,8 @@ open class YPImagePicker: UINavigationController {
     }
 }
 
-extension YPImagePicker: YPPickerVCDelegate {
-    func libraryHasNoItems() {
-        self.imagePickerDelegate?.imagePickerHasNoItemsInLibrary(self)
-    }
-    
-    func shouldAddToSelection(indexPath: IndexPath, numSelections: Int) -> Bool {
-        return self.imagePickerDelegate?.shouldAddToSelection(indexPath: indexPath, numSelections: numSelections)
-            ?? true
+extension YPImagePicker: ImagePickerDelegate {
+    func noPhotos() {
+        self.imagePickerDelegate?.noPhotos()
     }
 }

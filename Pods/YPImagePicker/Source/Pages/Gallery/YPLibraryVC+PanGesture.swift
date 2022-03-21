@@ -21,12 +21,10 @@ public class PanGestureHelper: NSObject, UIGestureRecognizerDelegate {
     
     // The height constraint of the view with main selected image
     var topHeight: CGFloat {
-        get {
-            return v.assetViewContainerConstraintTop?.constant ?? 0
-        }
+        get { return v.assetViewContainerConstraintTop.constant }
         set {
             if newValue >= v.assetZoomableViewMinimalVisibleHeight - v.assetViewContainer.frame.height {
-                v.assetViewContainerConstraintTop?.constant = newValue
+                v.assetViewContainerConstraintTop.constant = newValue
             }
         }
     }
@@ -165,3 +163,4 @@ public class PanGestureHelper: NSObject, UIGestureRecognizerDelegate {
         isImageShown = topHeight == assetViewContainerOriginalConstraintTop
     }
 }
+

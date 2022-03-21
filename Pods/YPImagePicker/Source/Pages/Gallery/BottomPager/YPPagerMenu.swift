@@ -16,15 +16,14 @@ final class YPPagerMenu: UIView {
     
     convenience init() {
         self.init(frame: .zero)
-        backgroundColor = .offWhiteOrBlack
+        backgroundColor = YPConfig.colors.bottomMenuHeaderBackgroundColor
         clipsToBounds = true
     }
     
     var separators = [UIView]()
     
     func setUpMenuItemsConstraints() {
-        let screenWidth = YPImagePickerConfiguration.screenWidth
-        let menuItemWidth: CGFloat = screenWidth / CGFloat(menuItems.count)
+        let menuItemWidth: CGFloat = UIScreen.main.bounds.width / CGFloat(menuItems.count)
         var previousMenuItem: YPMenuItem?
         for m in menuItems {
             sv(

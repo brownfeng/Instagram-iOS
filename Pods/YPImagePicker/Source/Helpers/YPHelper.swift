@@ -13,13 +13,13 @@ import Photos
 internal func ypLocalized(_ str: String) -> String {
     return NSLocalizedString(str,
                              tableName: "YPImagePickerLocalizable",
-                             bundle: Bundle.local,
+                             bundle: Bundle(for: YPPickerVC.self),
                              value: "",
                              comment: "")
 }
 
 internal func imageFromBundle(_ named: String) -> UIImage {
-    return UIImage(named: named, in: Bundle.local, compatibleWith: nil) ?? UIImage()
+    return UIImage(named: named, in: Bundle(for: YPPickerVC.self), compatibleWith: nil) ?? UIImage()
 }
 
 struct YPHelper {

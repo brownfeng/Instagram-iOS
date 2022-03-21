@@ -13,6 +13,8 @@ class RegistrationController: UIViewController {
     
     private var viewModel: RegistratioinViewModel = RegistratioinViewModel()
     
+    private var profileImage: UIImage?
+    
     private lazy var plushPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .white
@@ -28,6 +30,7 @@ class RegistrationController: UIViewController {
     
     private let passwordTextFiled: CustomTextFiled = {
         let tf = CustomTextFiled(placeholder: "Password")
+        tf.textContentType = .oneTimeCode
         tf.isSecureTextEntry = true
         return tf
     }()
@@ -46,10 +49,12 @@ class RegistrationController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemPurple
+        button.backgroundColor = .systemPurple.withAlphaComponent(0.5)
         button.layer.cornerRadius = 5
         button.setHeight( 50)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
+        button.isEnabled = false
         return button
     }()
     
@@ -74,6 +79,25 @@ class RegistrationController: UIViewController {
     // MARK: - Actions
     @objc private func handleShowSignIn() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func handleSignUp() {
+        guard let email = emailTextFiled.text else {return}
+        guard let password = passwordTextFiled.text else {return}
+        guard let fullname = fullnameTextFiled.text else {return}
+        guard let username = usernameTextFiled.text else {return}
+        guard let profileImage = profileImage else {return}
+
+        let credential = AuthCredentials(email: email, password: password, fullname: fullname, username: username, profileImage: profileImage)
+        AuthService.registerUser(with: credential) { error in
+            if let error = error {
+                print("DEBUG: Failed to register user \(error.localizedDescription)")
+            }else {
+                print("DEBUG: Successfully regisetered user with firebase")
+            }
+            
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @objc private func handleProfilePhotoSelect() {
@@ -145,6 +169,8 @@ extension RegistrationController: FormViewModel {
 extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {        
         guard let selectedImage = info[.editedImage] as? UIImage else { return }
+        
+        profileImage = selectedImage
         
         plushPhotoButton.layer.cornerRadius = plushPhotoButton.frame.width / 2
         plushPhotoButton.layer.masksToBounds = true

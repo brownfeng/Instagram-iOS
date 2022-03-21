@@ -11,6 +11,7 @@ import Foundation
 import AVFoundation
 import Photos
 
+
 public class YPMediaPhoto {
     
     public var image: UIImage { return modifiedImage ?? originalImage }
@@ -19,19 +20,13 @@ public class YPMediaPhoto {
     public let fromCamera: Bool
     public let exifMeta: [String: Any]?
     public var asset: PHAsset?
-    public var url: URL?
     
-    public init(image: UIImage,
-                exifMeta: [String: Any]? = nil,
-                fromCamera: Bool = false,
-                asset: PHAsset? = nil,
-                url: URL? = nil) {
+    public init(image: UIImage, exifMeta: [String: Any]? = nil, fromCamera: Bool = false, asset: PHAsset? = nil) {
         self.originalImage = image
         self.modifiedImage = nil
         self.fromCamera = fromCamera
         self.exifMeta = exifMeta
         self.asset = asset
-        self.url = url
     }
 }
 

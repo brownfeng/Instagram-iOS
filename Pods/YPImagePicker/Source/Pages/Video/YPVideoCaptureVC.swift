@@ -8,8 +8,9 @@
 
 import UIKit
 
-internal class YPVideoCaptureVC: UIViewController, YPPermissionCheckable {
-    var didCaptureVideo: ((URL) -> Void)?
+public class YPVideoCaptureVC: UIViewController, YPPermissionCheckable {
+    
+    public var didCaptureVideo: ((URL) -> Void)?
     
     private let videoHelper = YPVideoCaptureHelper()
     private let v = YPCameraView(overlayView: nil)
@@ -17,9 +18,9 @@ internal class YPVideoCaptureVC: UIViewController, YPPermissionCheckable {
     
     // MARK: - Init
     
-    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    public required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
-    required init() {
+    public required init() {
         super.init(nibName: nil, bundle: nil)
         title = YPConfig.wordings.videoTitle
         videoHelper.didCaptureVideo = { [weak self] videoURL in
@@ -36,9 +37,9 @@ internal class YPVideoCaptureVC: UIViewController, YPPermissionCheckable {
     
     // MARK: - View LifeCycle
     
-    override func loadView() { view = v }
+    override public func loadView() { view = v }
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         v.timeElapsedLabel.isHidden = false // Show the time elapsed label since we're in the video screen.
         setupButtons()
@@ -54,11 +55,19 @@ internal class YPVideoCaptureVC: UIViewController, YPPermissionCheckable {
     }
 
     func start() {
-        self.videoHelper.start(previewView: v.previewViewContainer,
-                               withVideoRecordingLimit: YPConfig.video.recordingTimeLimit) { [weak self] in
-            DispatchQueue.main.async {
-                self?.refreshState()
+        v.shotButton.isEnabled = false
+        doAfterPermissionCheck { [weak self] in
+            guard let strongSelf = self else {
+                return
             }
+            self?.videoHelper.start(previewView: strongSelf.v.previewViewContainer,
+                                    withVideoRecordingLimit: YPConfig.video.recordingTimeLimit,
+                                    completion: {
+                                        DispatchQueue.main.async {
+                                            self?.v.shotButton.isEnabled = true
+                                            self?.refreshState()
+                                        }
+            })
         }
     }
     
@@ -88,6 +97,12 @@ internal class YPVideoCaptureVC: UIViewController, YPPermissionCheckable {
     
     @objc
     func flipButtonTapped() {
+        doAfterPermissionCheck { [weak self] in
+            self?.flip()
+        }
+    }
+    
+    private func flip() {
         videoHelper.flipCamera {
             self.updateState {
                 $0.flashMode = self.flashModeFrom(videoHelper: self.videoHelper)
@@ -109,7 +124,7 @@ internal class YPVideoCaptureVC: UIViewController, YPPermissionCheckable {
     
     @objc
     func shotButtonTapped() {
-        doAfterCameraPermissionCheck { [weak self] in
+        doAfterPermissionCheck { [weak self] in
             self?.toggleRecording()
         }
     }
@@ -119,11 +134,6 @@ internal class YPVideoCaptureVC: UIViewController, YPPermissionCheckable {
     }
     
     private func startRecording() {
-        // Stop the screen from going to sleep while recording video
-        DispatchQueue.main.async {
-            UIApplication.shared.isIdleTimerDisabled = true
-        }
-        
         videoHelper.startRecording()
         updateState {
             $0.isRecording = true
@@ -131,11 +141,6 @@ internal class YPVideoCaptureVC: UIViewController, YPPermissionCheckable {
     }
     
     private func stopRecording() {
-        // Reset screen always on to false since the need no longer exists
-        DispatchQueue.main.async {
-            UIApplication.shared.isIdleTimerDisabled = false
-        }
-        
         videoHelper.stopRecording()
         updateState {
             $0.isRecording = false
@@ -150,6 +155,12 @@ internal class YPVideoCaptureVC: UIViewController, YPPermissionCheckable {
     
     @objc
     func focusTapped(_ recognizer: UITapGestureRecognizer) {
+        doAfterPermissionCheck { [weak self] in
+            self?.focus(recognizer: recognizer)
+        }
+    }
+    
+    private func focus(recognizer: UITapGestureRecognizer) {
         let point = recognizer.location(in: v.previewViewContainer)
         let viewsize = v.previewViewContainer.bounds.size
         let newPoint = CGPoint(x: point.x/viewsize.width, y: point.y/viewsize.height)
@@ -164,7 +175,9 @@ internal class YPVideoCaptureVC: UIViewController, YPPermissionCheckable {
     
     @objc
     func pinch(_ recognizer: UIPinchGestureRecognizer) {
-        self.zoom(recognizer: recognizer)
+        doAfterPermissionCheck { [weak self] in
+            self?.zoom(recognizer: recognizer)
+        }
     }
     
     func zoom(recognizer: UIPinchGestureRecognizer) {
@@ -187,7 +200,7 @@ internal class YPVideoCaptureVC: UIViewController, YPPermissionCheckable {
         var timeElapsed: TimeInterval = 0
     }
     
-    private func updateState(block: (inout ViewState) -> Void) {
+    private func updateState(block:(inout ViewState) -> Void) {
         block(&viewState)
         updateUIWith(state: viewState)
     }
@@ -230,8 +243,7 @@ internal class YPVideoCaptureVC: UIViewController, YPPermissionCheckable {
             case .on: return .on
             case .auto: return .auto
             @unknown default:
-                ypLog("unknown default reached. Check code.")
-                return .noFlash
+                fatalError()
             }
         } else {
             return .noFlash

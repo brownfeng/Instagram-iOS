@@ -10,13 +10,13 @@ import UIKit
 
 public enum YPCropType {
     case none
+    case custom(corpper: YPCropVCProtocol.Type, configuration: Any?)
     case rectangle(ratio: Double)
-    case circle
 }
 
-class YPCropVC: UIViewController {
+class YPCropVC: UIViewController , YPCropVCProtocol {
     
-    public var didFinishCropping: ((UIImage) -> Void)?
+    var didFinishCropping: ((UIImage) -> Void)?
     
     override var prefersStatusBarHidden: Bool { return YPConfig.hidesStatusBar }
     
@@ -27,8 +27,12 @@ class YPCropVC: UIViewController {
     private let v: YPCropView
     override func loadView() { view = v }
     
-    required init(image: UIImage) {
-        v = YPCropView(image: image)
+    required convenience init(image: UIImage, configuration: Any?) {
+        self.init(image: image, ratio: 1)
+    }
+    
+    required init(image: UIImage, ratio: Double) {
+        v = YPCropView(image: image, ratio: ratio)
         originalImage = image
         super.init(nibName: nil, bundle: nil)
         self.title = YPConfig.wordings.crop
@@ -44,22 +48,28 @@ class YPCropVC: UIViewController {
         setupGestureRecognizers()
     }
     
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard YPConfig.hidesNavigationBarBackground else { return }
+        let isHide = !YPConfig.hidesNavigationBarBackground
+        navigationController?.setNavigationBarHidden(isHide, animated: true)
+    }
+    
     func setupToolbar() {
         let cancelButton = UIBarButtonItem(title: YPConfig.wordings.cancel,
                                            style: .plain,
                                            target: self,
                                            action: #selector(cancel))
-        cancelButton.tintColor = .ypLabel
-        cancelButton.setFont(font: YPConfig.fonts.leftBarButtonFont, forState: .normal)
-        
+        cancelButton.tintColor = YPConfig.colors.cancelTintColor
+
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
+
         let saveButton = UIBarButtonItem(title: YPConfig.wordings.save,
                                            style: .plain,
                                            target: self,
                                            action: #selector(done))
-        saveButton.setFont(font: YPConfig.fonts.rightBarButtonFont, forState: .normal)
-        saveButton.tintColor = .ypLabel
+        saveButton.tintColor = YPConfig.colors.tintColor
+
         v.toolbar.items = [cancelButton, flexibleSpace, saveButton]
     }
     
@@ -122,7 +132,7 @@ extension YPCropVC: UIGestureRecognizerDelegate {
         case .cancelled, .failed, .possible:
             ()
         @unknown default:
-            ypLog("unknown default reached. Check code.")
+            fatalError()
         }
         // Reset the pinch scale.
         sender.scale = 1.0
