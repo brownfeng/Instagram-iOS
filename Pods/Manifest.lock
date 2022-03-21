@@ -133,9 +133,9 @@ PODS:
     - SDWebImage/Core (= 5.12.5)
   - SDWebImage/Core (5.12.5)
   - SteviaLayout (4.7.3)
-  - YPImagePicker (4.2.1):
-    - PryntTrimmerView (~> 4.0.0)
-    - SteviaLayout (~> 4.7.3)
+  - YPImagePicker (5.2.1):
+    - PryntTrimmerView (= 4.0.2)
+    - SteviaLayout (= 4.7.3)
 
 DEPENDENCIES:
   - ActiveLabel
@@ -149,7 +149,7 @@ DEPENDENCIES:
   - JGProgressHUD (~> 2.0.4)
   - PryntTrimmerView
   - SDWebImage
-  - YPImagePicker (from `https://gitee.com/windyhuangwenfei/YPImagePicker`)
+  - YPImagePicker
 
 SPEC REPOS:
   trunk:
@@ -174,15 +174,7 @@ SPEC REPOS:
     - PryntTrimmerView
     - SDWebImage
     - SteviaLayout
-
-EXTERNAL SOURCES:
-  YPImagePicker:
-    :git: https://gitee.com/windyhuangwenfei/YPImagePicker
-
-CHECKOUT OPTIONS:
-  YPImagePicker:
-    :commit: a67a3aae74cc8daa268f5c73d9995ae2d0f81e08
-    :git: https://gitee.com/windyhuangwenfei/YPImagePicker
+    - YPImagePicker
 
 SPEC CHECKSUMS:
   ActiveLabel: 5e3f4de79a1952d4604b845a0610d4776e4b82b3
@@ -206,8 +198,8 @@ SPEC CHECKSUMS:
   PryntTrimmerView: 6a43cc90df5d99addeabd33d4ba09b1365322130
   SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
-  YPImagePicker: 40796aa8ea7fea39e2861b705c2e154d3f43f78e
+  YPImagePicker: f36043210c10b0783034eb1947d6e06e31c461e4
 
-PODFILE CHECKSUM: 7cced1d00d577d4fd6a05ded2379980f77a0feca
+PODFILE CHECKSUM: d049b26e97a1f3f94556c181a102725eeed820e8
 
 COCOAPODS: 1.11.3

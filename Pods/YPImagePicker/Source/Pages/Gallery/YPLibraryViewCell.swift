@@ -13,7 +13,7 @@ class YPMultipleSelectionIndicator: UIView {
     
     let circle = UIView()
     let label = UILabel()
-    var selectionColor: UIColor = .ypSystemBlue
+    var selectionColor = UIColor.ypSystemBlue
 
     convenience init() {
         self.init(frame: .zero)
@@ -31,14 +31,13 @@ class YPMultipleSelectionIndicator: UIView {
         
         circle.layer.cornerRadius = size / 2.0
         label.textAlignment = .center
-        label.textColor = YPConfig.colors.libraryMutilSelectionNumberTextColor
-        label.font = YPConfig.fonts.libraryMutilSelectionNumberTextFont
+        label.textColor = .white
+        label.font = YPConfig.fonts.multipleSelectionIndicatorFont
         
         set(number: nil)
     }
     
     func set(number: Int?) {
-        let colors = YPConfig.colors
         label.isHidden = (number == nil)
         if let number = number {
             circle.backgroundColor = selectionColor
@@ -46,9 +45,8 @@ class YPMultipleSelectionIndicator: UIView {
             circle.layer.borderWidth = 0
             label.text = "\(number)"
         } else {
-            circle.backgroundColor =
-                colors.multipleItemsUnSelectedCircleColor.withAlphaComponent(0.3)
-            circle.layer.borderColor = colors.multipleItemsUnSelectedCircleColor.cgColor
+            circle.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+            circle.layer.borderColor = UIColor.white.cgColor
             circle.layer.borderWidth = 1
             label.text = ""
         }
@@ -88,12 +86,13 @@ class YPLibraryViewCell: UICollectionViewCell {
         
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        durationLabel.textColor = YPConfig.colors.libraryDurationTextColor
-        durationLabel.font =  YPConfig.fonts.libraryDurationTextFont
+        durationLabel.textColor = .white
+        durationLabel.font = YPConfig.fonts.durationFont
         durationLabel.isHidden = true
-        selectionOverlay.backgroundColor = YPConfig.colors.librarySelectionOverlayColor
+        selectionOverlay.backgroundColor = .white
         selectionOverlay.alpha = 0
         backgroundColor = .ypSecondarySystemBackground
+        setAccessibilityInfo()
     }
 
     override var isSelected: Bool {
@@ -107,5 +106,11 @@ class YPLibraryViewCell: UICollectionViewCell {
     private func refreshSelection() {
         let showOverlay = isSelected || isHighlighted
         selectionOverlay.alpha = showOverlay ? 0.6 : 0
+    }
+
+    private func setAccessibilityInfo() {
+        isAccessibilityElement = true
+        self.accessibilityIdentifier = "YPLibraryViewCell"
+        self.accessibilityLabel = "Library Image"
     }
 }

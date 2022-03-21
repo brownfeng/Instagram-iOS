@@ -25,6 +25,7 @@
 		C09B1AC827E72956005BE12F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C09B1AC727E72955005BE12F /* Main.storyboard */; };
 		C09B1ACA27E72B54005BE12F /* ImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09B1AC927E72B54005BE12F /* ImageUploader.swift */; };
 		C09B1ACC27E72B5F005BE12F /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09B1ACB27E72B5E005BE12F /* AuthService.swift */; };
+		C09B1AD127E8AFF1005BE12F /* FirebaseStorage.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C09B1ACE27E8AFF1005BE12F /* FirebaseStorage.xcframework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C0F19F4127E6C60800CB6A0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F19F4027E6C60800CB6A0B /* AppDelegate.swift */; };
 		C0F19F4327E6C60800CB6A0B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F19F4227E6C60800CB6A0B /* SceneDelegate.swift */; };
 		C0F19F4A27E6C60A00CB6A0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0F19F4927E6C60A00CB6A0B /* Assets.xcassets */; };
@@ -68,6 +69,8 @@
 		C09B1AC727E72955005BE12F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C09B1AC927E72B54005BE12F /* ImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploader.swift; sourceTree = "<group>"; };
 		C09B1ACB27E72B5E005BE12F /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		C09B1ACD27E8AFF1005BE12F /* GTMSessionFetcher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GTMSessionFetcher.xcframework; path = Carthage/Build/GTMSessionFetcher.xcframework; sourceTree = "<group>"; };
+		C09B1ACE27E8AFF1005BE12F /* FirebaseStorage.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseStorage.xcframework; path = Carthage/Build/FirebaseStorage.xcframework; sourceTree = "<group>"; };
 		C0F19F3D27E6C60800CB6A0B /* Instagram-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Instagram-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0F19F4027E6C60800CB6A0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0F19F4227E6C60800CB6A0B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +94,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				521A72A31E3ED65FA30EB0BB /* Pods_Instagram_iOS.framework in Frameworks */,
+				C09B1AD127E8AFF1005BE12F /* FirebaseStorage.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +118,8 @@
 		2FE432E3022D38C8046DC0BC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C09B1ACE27E8AFF1005BE12F /* FirebaseStorage.xcframework */,
+				C09B1ACD27E8AFF1005BE12F /* GTMSessionFetcher.xcframework */,
 				D1578127E45E83B69C8FD05B /* Pods_Instagram_iOS.framework */,
 			);
 			name = Frameworks;

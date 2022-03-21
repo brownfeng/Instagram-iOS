@@ -16,7 +16,7 @@ final class YPBottomPagerView: UIView {
     
     convenience init() {
         self.init(frame: .zero)
-        backgroundColor = YPConfig.colors.bottomMenuBackgroundColor
+        backgroundColor = .offWhiteOrBlack
         
         sv(
             scrollView,
@@ -30,8 +30,12 @@ final class YPBottomPagerView: UIView {
             |header| ~ 44
         )
         
-        setHeaderBottom()
-        hideHeader(isHide: YPConfig.hidesBottomBar)
+        if #available(iOS 11.0, *) {
+            header.Bottom == safeAreaLayoutGuide.Bottom
+        } else {
+            header.bottom(0)
+        }
+        header.heightConstraint?.constant = (YPConfig.hidesBottomBar || (YPConfig.screens.count == 1)) ? 0 : 44
         
         clipsToBounds = false
         setupScrollView()
@@ -43,33 +47,5 @@ final class YPBottomPagerView: UIView {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.scrollsToTop = false
         scrollView.bounces = false
-        scrollView.backgroundColor = YPConfig.colors.bottomMenuScrollViewBackgroundColor
-    }
-    
-    private func setHeaderBottom() {
-        if #available(iOS 11.0, *) {
-            let offset = -(safeAreaInsets.bottom) + YPHomeIndicator.height()
-            let value = YPConfig.hidesBottomBar ? 0 : offset
-            header.bottom(value)
-        } else {
-            header.bottom(0)
-        }
-    }
-    
-    public func hideHeader(isHide: Bool) {
-        header.heightConstraint?.constant = isHide ? 0 : 44
-        headerBottomOffset(isHide: isHide)
-    }
-    
-    public func headerBottomOffset(isHide: Bool) {
-        guard !YPConfig.hidesBottomBar else { return }
-        guard !YPConfig.onlySquareImagesFromCamera else { return }
-        guard YPConfig.hidesBottomBarWhenSelectedCamareScreen else { return }
-        if #available(iOS 11.0, *) {
-            header.bottomConstraint?.constant = isHide ? 0 : -(safeAreaInsets.bottom)
-//            UIView.animate(withDuration: 0.2) { self.layoutIfNeeded() }
-        } else {
-            header.bottomConstraint?.constant = 0
-        }
     }
 }

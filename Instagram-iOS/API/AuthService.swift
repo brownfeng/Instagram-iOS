@@ -6,7 +6,8 @@
 //
 
 import UIKit
-import FirebaseCore
+import Firebase
+
 
 struct AuthCredentials {
     let email: String
@@ -40,7 +41,7 @@ struct AuthService {
                     "username": credentials.username
                 ]
                 
-                
+                Storage.storage().reference()
                 
             }
         }

@@ -23,14 +23,13 @@ target 'Instagram-iOS' do
    pod 'Firebase/Database'
    pod 'Firebase/Auth'
    pod 'Firebase/Installations'
-   pod 'FirebaseFirestore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :branch => 'master'
-
   pod 'GTMSessionFetcher'
+ # pod 'FirebaseFirestore', :path => '/Users/brown/Desktop/firebase-ios-sdk'
 
   
   pod 'ActiveLabel'
   pod 'SDWebImage'
-  pod 'YPImagePicker', :git => 'https://gitee.com/windyhuangwenfei/YPImagePicker'
+  pod 'YPImagePicker'
   pod "PryntTrimmerView"
   pod 'JGProgressHUD', '~>2.0.4'
 
