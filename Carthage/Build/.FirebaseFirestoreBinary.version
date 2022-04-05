@@ -1,0 +1,228 @@
+{
+  "Mac" : [
+    {
+      "hash" : "2214395ec5f3066d0c485aab400983885a65f20cb5dc6ea1023e53229bdf7202",
+      "name" : "BoringSSL-GRPC",
+      "container" : "BoringSSL-GRPC.xcframework",
+      "identifier" : "macos-arm64_x86_64"
+    },
+    {
+      "hash" : "b7aa7bdbc4ddddce99e10c0a68d661bcd1a32abb54a1b68ed3d3448ed3b3b473",
+      "name" : "FirebaseFirestore",
+      "container" : "FirebaseFirestore.xcframework",
+      "identifier" : "macos-arm64_x86_64"
+    },
+    {
+      "hash" : "b773fc95fe67d727717a85059bd6e98895aee357b7ae000d43e447b27f0be56c",
+      "name" : "abseil",
+      "container" : "abseil.xcframework",
+      "identifier" : "macos-arm64_x86_64"
+    },
+    {
+      "hash" : "8fab818c5f963802ff05e00f5c3cab9e21baa49ca6d73dcaba24dd549ccb167a",
+      "name" : "gRPC-C++",
+      "container" : "gRPC-C++.xcframework",
+      "identifier" : "macos-arm64_x86_64"
+    },
+    {
+      "hash" : "0912c015fd52e8977ffca21be16c29a84bf7f43828cf2a9eef8ca49fe061f583",
+      "name" : "gRPC-Core",
+      "container" : "gRPC-Core.xcframework",
+      "identifier" : "macos-arm64_x86_64"
+    },
+    {
+      "hash" : "543202af22e3811c5fc22aeb63401a3280744ed37e9f94957770b504a224aa9c",
+      "name" : "leveldb-library",
+      "container" : "leveldb-library.xcframework",
+      "identifier" : "macos-arm64_x86_64"
+    }
+  ],
+  "watchOS" : [
+
+  ],
+  "tvOS" : [
+    {
+      "hash" : "b83dd266006fbe7e585a89774164a40288206b59f62dd2143087d8cd0b7d41a3",
+      "name" : "BoringSSL-GRPC",
+      "container" : "BoringSSL-GRPC.xcframework",
+      "identifier" : "tvos-arm64_x86_64-simulator"
+    },
+    {
+      "hash" : "5906dc903b84f6e35f2760847b1ffa2b066535eda891436fc0b5cd9daa5434bb",
+      "name" : "BoringSSL-GRPC",
+      "container" : "BoringSSL-GRPC.xcframework",
+      "identifier" : "tvos-arm64"
+    },
+    {
+      "hash" : "e56366f90560eadfdbef3d9ff3a7e78add17ce32fda88c3abb44ce9a5541139b",
+      "name" : "FirebaseFirestore",
+      "container" : "FirebaseFirestore.xcframework",
+      "identifier" : "tvos-arm64_x86_64-simulator"
+    },
+    {
+      "hash" : "52b6800433e2564c78fc73db2c3e36b4d531fc0746b29a5e0585aae24726d9ef",
+      "name" : "FirebaseFirestore",
+      "container" : "FirebaseFirestore.xcframework",
+      "identifier" : "tvos-arm64"
+    },
+    {
+      "hash" : "ab8f5d886e510ccdd1dd1a525829647c5b0f28386c13a3bd6f02790cf740b05b",
+      "name" : "abseil",
+      "container" : "abseil.xcframework",
+      "identifier" : "tvos-arm64_x86_64-simulator"
+    },
+    {
+      "hash" : "b9fd6d5ecbe2987fe35224e184b6816c7720f534d6a1424abb19475c53353792",
+      "name" : "abseil",
+      "container" : "abseil.xcframework",
+      "identifier" : "tvos-arm64"
+    },
+    {
+      "hash" : "f5af867e3f750ddb8991b422371c7093d06da634ecd507f5d7e67944576ee6ba",
+      "name" : "gRPC-C++",
+      "container" : "gRPC-C++.xcframework",
+      "identifier" : "tvos-arm64_x86_64-simulator"
+    },
+    {
+      "hash" : "a8a71b7e3ddeba857346b10c7392b2c9a0b08c267688189b4d415fe112f29888",
+      "name" : "gRPC-C++",
+      "container" : "gRPC-C++.xcframework",
+      "identifier" : "tvos-arm64"
+    },
+    {
+      "hash" : "8077d6ecf17df3a74f65227f53ff96b2ad3f7f801c877cddb5cf72a16aff14d2",
+      "name" : "gRPC-Core",
+      "container" : "gRPC-Core.xcframework",
+      "identifier" : "tvos-arm64_x86_64-simulator"
+    },
+    {
+      "hash" : "66b4643ef8e907d1b894631502d3cf92036b446461820820362e7c568076ac09",
+      "name" : "gRPC-Core",
+      "container" : "gRPC-Core.xcframework",
+      "identifier" : "tvos-arm64"
+    },
+    {
+      "hash" : "9273ceee191177f4801c8a291fa247b1e041c640bb2801006abeb8c0594fcae7",
+      "name" : "leveldb-library",
+      "container" : "leveldb-library.xcframework",
+      "identifier" : "tvos-arm64_x86_64-simulator"
+    },
+    {
+      "hash" : "20358d44c9e41b6ba3429c8f95777add23419b58127ef95ca4dcedb371045f33",
+      "name" : "leveldb-library",
+      "container" : "leveldb-library.xcframework",
+      "identifier" : "tvos-arm64"
+    }
+  ],
+  "commitish" : "8.13.0",
+  "iOS" : [
+    {
+      "hash" : "1106f850b77d1f370e9bae791879d4129177aee10e88f1ee42ee8b25b0c4275f",
+      "name" : "BoringSSL-GRPC",
+      "container" : "BoringSSL-GRPC.xcframework",
+      "identifier" : "ios-arm64_x86_64-maccatalyst"
+    },
+    {
+      "hash" : "76fc306da6ac480363ac56c592a064e12dbc24720f1c86a25880d57f750080ba",
+      "name" : "BoringSSL-GRPC",
+      "container" : "BoringSSL-GRPC.xcframework",
+      "identifier" : "ios-arm64_i386_x86_64-simulator"
+    },
+    {
+      "hash" : "681427a70a802fd20b3e32fc5c559c5922fba65915e3c93339cdb25a758f97a8",
+      "name" : "BoringSSL-GRPC",
+      "container" : "BoringSSL-GRPC.xcframework",
+      "identifier" : "ios-arm64_armv7"
+    },
+    {
+      "hash" : "80f022fc6cb402203f7f638865e8ac531eb60bb5013b9b1490163622aad78801",
+      "name" : "FirebaseFirestore",
+      "container" : "FirebaseFirestore.xcframework",
+      "identifier" : "ios-arm64_x86_64-maccatalyst"
+    },
+    {
+      "hash" : "2b58c5b8732c90c9b8c8782d1bec42ff56bbc9523e5025630cd6556a4ea3f063",
+      "name" : "FirebaseFirestore",
+      "container" : "FirebaseFirestore.xcframework",
+      "identifier" : "ios-arm64_i386_x86_64-simulator"
+    },
+    {
+      "hash" : "17c518526f79ff1844587b8b6560aebfa74a4b133bc739444839c59d43045f03",
+      "name" : "FirebaseFirestore",
+      "container" : "FirebaseFirestore.xcframework",
+      "identifier" : "ios-arm64_armv7"
+    },
+    {
+      "hash" : "2402c7a2868d11f96a9b8a0907d20a6cb18b8727664d1977ab9a236224dd768f",
+      "name" : "abseil",
+      "container" : "abseil.xcframework",
+      "identifier" : "ios-arm64_x86_64-maccatalyst"
+    },
+    {
+      "hash" : "b32bd102b382946e5ee3078be5eb4380dbae89f5d2f54529ea5de2b17699ee4c",
+      "name" : "abseil",
+      "container" : "abseil.xcframework",
+      "identifier" : "ios-arm64_i386_x86_64-simulator"
+    },
+    {
+      "hash" : "1b6da65ede2ad834d3c24ae2e6ea545715735c7c13422a2e880a91f0152d75bc",
+      "name" : "abseil",
+      "container" : "abseil.xcframework",
+      "identifier" : "ios-arm64_armv7"
+    },
+    {
+      "hash" : "a1328250cce07f2cbf27e859cf4fdda55f5da38e3e0e06cf790367410fb48459",
+      "name" : "gRPC-C++",
+      "container" : "gRPC-C++.xcframework",
+      "identifier" : "ios-arm64_x86_64-maccatalyst"
+    },
+    {
+      "hash" : "ff30fbe3600aa4434367ef0c497e9aa6663d6b2867c5afea1838764252d99e95",
+      "name" : "gRPC-C++",
+      "container" : "gRPC-C++.xcframework",
+      "identifier" : "ios-arm64_i386_x86_64-simulator"
+    },
+    {
+      "hash" : "fc8dc325dfff34e47cdcef305f77ce437b63c8754b3e0fcdfdf8a43feb6e2133",
+      "name" : "gRPC-C++",
+      "container" : "gRPC-C++.xcframework",
+      "identifier" : "ios-arm64_armv7"
+    },
+    {
+      "hash" : "e6fa2d7275f223d0c0b6c709eb62bb663f148397c97e3c260ae31fcbb19bc310",
+      "name" : "gRPC-Core",
+      "container" : "gRPC-Core.xcframework",
+      "identifier" : "ios-arm64_x86_64-maccatalyst"
+    },
+    {
+      "hash" : "e94ec32796756683d0ee3c93573f162669cf82a08fb62334e159f2e1af7af7a2",
+      "name" : "gRPC-Core",
+      "container" : "gRPC-Core.xcframework",
+      "identifier" : "ios-arm64_i386_x86_64-simulator"
+    },
+    {
+      "hash" : "6e00170f27d12d62c3af6311b9a46ec91d23e07c5d0700602fffdc8d665d3885",
+      "name" : "gRPC-Core",
+      "container" : "gRPC-Core.xcframework",
+      "identifier" : "ios-arm64_armv7"
+    },
+    {
+      "hash" : "cb3dcec3e87831cd396a0e91d2e36efa4b5c44195934a229751c674a04c8372a",
+      "name" : "leveldb-library",
+      "container" : "leveldb-library.xcframework",
+      "identifier" : "ios-arm64_i386_x86_64-simulator"
+    },
+    {
+      "hash" : "fe747586bffb4c0700a42c60b32eebfc8638d7c0dde14cf3c15ca337574335c6",
+      "name" : "leveldb-library",
+      "container" : "leveldb-library.xcframework",
+      "identifier" : "ios-arm64_x86_64-maccatalyst"
+    },
+    {
+      "hash" : "6e0e833ff8c69ab37df5c29cd91bc86322ac273ff022aacef37a9b7a04370703",
+      "name" : "leveldb-library",
+      "container" : "leveldb-library.xcframework",
+      "identifier" : "ios-arm64_armv7"
+    }
+  ]
+}

@@ -10,6 +10,7 @@ import UIKit
 class RegistrationController: UIViewController {
     
     // MARK: - Properties
+    weak var delegate: AuthenticationDelegate?
     
     private var viewModel: RegistratioinViewModel = RegistratioinViewModel()
     
@@ -45,7 +46,7 @@ class RegistrationController: UIViewController {
         return tf
     }()
     
-    private let signUpButton: UIButton = {
+    private lazy var signUpButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -58,18 +59,22 @@ class RegistrationController: UIViewController {
         return button
     }()
     
-    private let haveAccountButton: UIButton = {
+    private  lazy var haveAccountButton: UIButton = {
         let button = UIButton(type: .system)
         button.attributedTitle(firstPart: "Already have an account?  ", secondPart: "Sign In")
-        button.addTarget(self, action: #selector(handleShowSignIn), for: .touchUpInside)
-
+        button.addTarget(self, action: #selector(handleShowLogIn), for: .touchUpInside)
         return button
     }()
 
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configureNotificationObsersers()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapView))
+        self.view.addGestureRecognizer(tap)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -77,7 +82,8 @@ class RegistrationController: UIViewController {
     }
     
     // MARK: - Actions
-    @objc private func handleShowSignIn() {
+    
+    @objc private func handleShowLogIn() {
         navigationController?.popViewController(animated: true)
     }
     
@@ -95,8 +101,7 @@ class RegistrationController: UIViewController {
             }else {
                 print("DEBUG: Successfully regisetered user with firebase")
             }
-            
-            self.dismiss(animated: true, completion: nil)
+            self.delegate?.authenticationDidComplete()
         }
     }
     
@@ -105,6 +110,11 @@ class RegistrationController: UIViewController {
         picker.delegate = self
         picker.allowsEditing = true
         present(picker, animated: true, completion: nil)
+    }
+    
+    @objc
+    private func handleTapView() {
+        self.view.endEditing(true)
     }
     
     @objc private func textDidChange(sender: UITextField) {

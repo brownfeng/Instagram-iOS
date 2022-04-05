@@ -6,11 +6,17 @@
 //
 
 import UIKit
+import Firebase
 
+protocol AuthenticationDelegate: AnyObject {
+    func authenticationDidComplete()
+}
 class LoginController: UIViewController {
     
     // MARK: - Properties
     private var viewModel = LoginViewModel()
+    
+    weak var delegate: AuthenticationDelegate?
     
     private let iconImage:UIImageView = {
         let iv = UIImageView(image: UIImage(named: "Instagram_logo_white"))
@@ -21,16 +27,18 @@ class LoginController: UIViewController {
     private let emailTextFiled: CustomTextFiled = {
         let tf = CustomTextFiled(placeholder: "Email")
         tf.keyboardType = .emailAddress
+        tf.text = "pp@qq.com"
         return tf
     }()
     
     private let passwordTextFiled: CustomTextFiled = {
         let tf = CustomTextFiled(placeholder: "Password")
         tf.isSecureTextEntry = true
+        tf.text = "123321"
         return tf
     }()
     
-    private let loginButton: UIButton = {
+    private lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Log in", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -38,7 +46,7 @@ class LoginController: UIViewController {
         button.layer.cornerRadius = 5
         button.setHeight( 50)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.isEnabled = false
+        button.addTarget(self, action: #selector(handleLogIn), for: .touchUpInside)
         return button
     }()
     
@@ -48,11 +56,10 @@ class LoginController: UIViewController {
         return button
     }()
     
-    private let dontHaveAccountButton: UIButton = {
+    private lazy var dontHaveAccountButton: UIButton = {
         let button = UIButton(type: .system)
         button.attributedTitle(firstPart: "Don't have an account?  ", secondPart: "Sign Up")
         button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
-
         return button
     }()
     
@@ -69,9 +76,27 @@ class LoginController: UIViewController {
     }
     
     // MARK: - Actions
+    @objc private func handleLogIn() {
+        print("handleLogIn")
+        self.view.endEditing(true)
+        guard let email = emailTextFiled.text, let password = passwordTextFiled.text else {
+            return
+        }
+        
+        AuthService.logUserIn(withEmail: email, password: password) { result, error in
+            guard let result = result else {
+                print("Debug signin: \(error)")
+                return
+            }
+            
+            self.delegate?.authenticationDidComplete()
+            print( "logged User: \(result.user)")
+        }
+    }
     
     @objc private func handleShowSignUp() {
         let vc = RegistrationController()
+        vc.delegate = delegate
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -123,6 +148,6 @@ extension LoginController: FormViewModel {
         // 如何使用 viewModel
         loginButton.backgroundColor = viewModel.buttonBackgroundColor
         loginButton.setTitleColor(viewModel.buttonTitleColor, for: .normal)
-        loginButton.isEnabled = viewModel.formIsValid
+//        loginButton.isEnabled = viewModel.formIsValid
     }
 }

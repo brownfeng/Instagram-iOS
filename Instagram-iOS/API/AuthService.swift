@@ -7,7 +7,7 @@
 
 import UIKit
 import Firebase
-
+import FirebaseFirestore
 
 struct AuthCredentials {
     let email: String
@@ -15,13 +15,18 @@ struct AuthCredentials {
     let fullname: String
     let username: String
     let profileImage: UIImage
-
 }
 
 struct AuthService {
+    static func logUserIn(withEmail email: String, password:String, completion: @escaping (AuthDataResult? , Error?) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
+            completion(result, error)
+        }
+    }
+    
     static func registerUser(with credentials: AuthCredentials, completion: @escaping (Error?) -> Void) {
         print(credentials)
-        
+         
         ImageUploader.uploadImage(image: credentials.profileImage) { imageUrl in
             Auth.auth().createUser(withEmail: credentials.email, password: credentials.password) { result, error in
                 if let error = error {
@@ -40,9 +45,7 @@ struct AuthService {
                     "uid": uid,
                     "username": credentials.username
                 ]
-                
-                Storage.storage().reference()
-                
+                COLLECTION_USERS.document(uid).setData(data, completion: completion)
             }
         }
     }
