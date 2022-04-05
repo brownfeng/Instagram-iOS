@@ -7,6 +7,7 @@
 
 import Foundation
 
+// 针对某个模型的 ViewModel 服务
 struct PostViewModel {
     private let post: Post
     

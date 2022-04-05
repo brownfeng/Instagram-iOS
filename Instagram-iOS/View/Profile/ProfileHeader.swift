@@ -8,6 +8,7 @@
 import UIKit
 import SDWebImage
 
+// tableView Header 对外的回调
 protocol ProfileHeaderDelegate: AnyObject {
     func header(_ profileHeader: ProfileHeader, didTapActionButtonFor user: User)
 }

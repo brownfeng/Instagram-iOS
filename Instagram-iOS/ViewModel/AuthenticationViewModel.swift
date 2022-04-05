@@ -11,12 +11,14 @@ protocol FormViewModel {
     func updateForm()
 }
 
+// 使用登录服务需要用的 viewModel
 protocol AuthenticationViewModel {
     var formIsValid: Bool { get }
     var buttonBackgroundColor: UIColor { get }
     var buttonTitleColor: UIColor { get }
 }
 
+// 登录使用的 VC
 struct LoginViewModel: AuthenticationViewModel {
     var email: String?
     var password: String?
@@ -34,6 +36,7 @@ struct LoginViewModel: AuthenticationViewModel {
     }
 }
 
+// 注册使用的 view/vc 使用的 viewModel
 struct RegistratioinViewModel: AuthenticationViewModel {
     var email: String?
     var password: String?

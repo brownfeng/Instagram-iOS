@@ -5,7 +5,6 @@
 //  Created by brown on 2022/3/30.
 //
 
-import Foundation
 import UIKit
 
 // ViewModel 是一个 View 关联的模型, 最好的方式是 一个 Protocol
@@ -36,7 +35,6 @@ struct ProfileHeaderViewModel {
         return user.isCurrentUser ? .black : .white
     }
     
-    
     var numberOfFollowers: NSAttributedString {
         return  attributedStatText(value: user.stats.followers, label: "followers")
     }
@@ -46,7 +44,7 @@ struct ProfileHeaderViewModel {
     }
     
     var numberOfPosts: NSAttributedString {
-        return  attributedStatText(value: 5, label: "posts")
+        return  attributedStatText(value: user.stats.posts, label: "posts")
     }
     
     init(user: User) {
