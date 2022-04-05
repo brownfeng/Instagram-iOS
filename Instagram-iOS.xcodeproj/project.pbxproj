@@ -14,6 +14,11 @@
 		C01D7CBB27F3512500100B84 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D7CBA27F3512500100B84 /* Constants.swift */; };
 		C0289D0227F5E4F700FC185E /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0289D0127F5E4F700FC185E /* UserCell.swift */; };
 		C0289D0427FB248000FC185E /* UserCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0289D0327FB248000FC185E /* UserCellViewModel.swift */; };
+		C0289D0627FBEBC200FC185E /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0289D0527FBEBC200FC185E /* UploadViewController.swift */; };
+		C0289D0827FC068500FC185E /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0289D0727FC068500FC185E /* InputTextView.swift */; };
+		C0289D0A27FC19A100FC185E /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0289D0927FC19A100FC185E /* PostService.swift */; };
+		C0289D0C27FC226D00FC185E /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0289D0B27FC226D00FC185E /* Post.swift */; };
+		C0289D0E27FC27CE00FC185E /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0289D0D27FC27CE00FC185E /* PostViewModel.swift */; };
 		C040F7EC27F3D25800BC8F9F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C040F7EB27F3D25800BC8F9F /* User.swift */; };
 		C040F7EE27F4964D00BC8F9F /* ProfileHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C040F7ED27F4964D00BC8F9F /* ProfileHeaderViewModel.swift */; };
 		C045098227EA0AFE0082B673 /* abseil.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C045097C27EA0AFE0082B673 /* abseil.xcframework */; };
@@ -73,6 +78,11 @@
 		C01D7CBA27F3512500100B84 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C0289D0127F5E4F700FC185E /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		C0289D0327FB248000FC185E /* UserCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCellViewModel.swift; sourceTree = "<group>"; };
+		C0289D0527FBEBC200FC185E /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
+		C0289D0727FC068500FC185E /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
+		C0289D0927FC19A100FC185E /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
+		C0289D0B27FC226D00FC185E /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		C0289D0D27FC27CE00FC185E /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		C040F7EB27F3D25800BC8F9F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C040F7ED27F4964D00BC8F9F /* ProfileHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderViewModel.swift; sourceTree = "<group>"; };
 		C045097C27EA0AFE0082B673 /* abseil.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = abseil.xcframework; path = Carthage/Build/abseil.xcframework; sourceTree = "<group>"; };
@@ -253,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				C040F7EB27F3D25800BC8F9F /* User.swift */,
+				C0289D0B27FC226D00FC185E /* Post.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -274,6 +285,7 @@
 				C096FDA627E70D6F00074A81 /* AuthenticationViewModel.swift */,
 				C040F7ED27F4964D00BC8F9F /* ProfileHeaderViewModel.swift */,
 				C0289D0327FB248000FC185E /* UserCellViewModel.swift */,
+				C0289D0D27FC27CE00FC185E /* PostViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -288,6 +300,7 @@
 				C096FD9527E6C88C00074A81 /* ImageSelectorController.swift */,
 				C096FD9727E6C89800074A81 /* NotificationController.swift */,
 				C096FD9927E6C8A000074A81 /* ProfileController.swift */,
+				C0289D0527FBEBC200FC185E /* UploadViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -298,6 +311,7 @@
 				C09B1AC927E72B54005BE12F /* ImageUploader.swift */,
 				C09B1ACB27E72B5E005BE12F /* AuthService.swift */,
 				C01D7CB827F3511000100B84 /* UserService.swift */,
+				C0289D0927FC19A100FC185E /* PostService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -307,6 +321,7 @@
 			children = (
 				C096FD9D27E6D98300074A81 /* Extensions.swift */,
 				C01D7CBA27F3512500100B84 /* Constants.swift */,
+				C0289D0727FC068500FC185E /* InputTextView.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -500,18 +515,23 @@
 				C096FDA727E70D6F00074A81 /* AuthenticationViewModel.swift in Sources */,
 				C096FD9A27E6C8A000074A81 /* ProfileController.swift in Sources */,
 				C096FD9E27E6D98300074A81 /* Extensions.swift in Sources */,
+				C0289D0627FBEBC200FC185E /* UploadViewController.swift in Sources */,
 				C01D7CB427F33C7200100B84 /* ProfileHeader.swift in Sources */,
 				C0289D0227F5E4F700FC185E /* UserCell.swift in Sources */,
 				C096FD9227E6C86600074A81 /* FeedController.swift in Sources */,
 				C0F19F7827E6C6F200CB6A0B /* MainTabController.swift in Sources */,
+				C0289D0E27FC27CE00FC185E /* PostViewModel.swift in Sources */,
+				C0289D0A27FC19A100FC185E /* PostService.swift in Sources */,
 				C01D7CB927F3511100100B84 /* UserService.swift in Sources */,
 				C0F19F4327E6C60800CB6A0B /* SceneDelegate.swift in Sources */,
+				C0289D0C27FC226D00FC185E /* Post.swift in Sources */,
 				C01D7CBB27F3512500100B84 /* Constants.swift in Sources */,
 				C040F7EC27F3D25800BC8F9F /* User.swift in Sources */,
 				C096FD9C27E6D83B00074A81 /* FeedCell.swift in Sources */,
 				C040F7EE27F4964D00BC8F9F /* ProfileHeaderViewModel.swift in Sources */,
 				C01D7CB627F33C7C00100B84 /* ProfileCell.swift in Sources */,
 				C096FDA527E7016100074A81 /* RegistrationController.swift in Sources */,
+				C0289D0827FC068500FC185E /* InputTextView.swift in Sources */,
 				C09B1ACC27E72B5F005BE12F /* AuthService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -688,6 +708,9 @@
 				DEVELOPMENT_TEAM = 28PAA3S5M5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Instagram-iOS/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = Camera;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = Mic;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = photo;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -719,6 +742,9 @@
 				DEVELOPMENT_TEAM = 28PAA3S5M5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Instagram-iOS/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = Camera;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = Mic;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = photo;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

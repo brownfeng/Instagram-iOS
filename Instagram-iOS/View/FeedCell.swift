@@ -10,6 +10,12 @@ import UIKit
 
 class FeedCell: UICollectionViewCell {
     
+    var viewModel: PostViewModel? {
+        didSet {
+            configure()
+        }
+    }
+    
     // MARK: - Properties
     
     private let profileImageView: UIImageView = {
@@ -133,5 +139,19 @@ class FeedCell: UICollectionViewCell {
         addSubview(stackView)
 
         stackView.anchor(top: postImageView.bottomAnchor, width: 120, height: 50)
+    }
+    
+    func configure() {
+        guard let viewModel = viewModel else {
+            return
+        }
+        
+        postImageView.sd_setImage(with: viewModel.imageUrl)
+        profileImageView.sd_setImage(with: viewModel.userProfileImageUrl)
+
+        captionLabel.text = viewModel.caption
+        usernameButton.setTitle(viewModel.username, for: .normal)
+        
+        likesLabel.text = viewModel.likesLabelText
     }
 }

@@ -7,6 +7,7 @@
 
 import FirebaseAuth
 import UIKit
+import YPImagePicker
 
 class MainTabController: UITabBarController {
     
@@ -59,6 +60,7 @@ class MainTabController: UITabBarController {
     
     func configureViewControllers(withUser user: User) {
         view.backgroundColor = .white
+        delegate = self
 
         // 注意是 flowlayout 而不是 layout
         let layout = UICollectionViewFlowLayout()
@@ -81,11 +83,72 @@ class MainTabController: UITabBarController {
         nav.navigationBar.tintColor = .black
         return nav
     }
+    
+    // 设置回调方法
+    func didFinishPickingMedia(_ picker: YPImagePicker) {
+        picker.didFinishPicking { items, cancelled in
+            picker.dismiss(animated: false) {
+                guard let selectedImage = items.singlePhoto?.image else { return }
+                print("DEBUG: Selected image is \(selectedImage)")
+                let controller = UploadViewController()
+                controller.selectedImage = selectedImage
+                controller.delegate = self
+                controller.currentUser = self.user
+                let nav = UINavigationController(rootViewController: controller)
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: false, completion: nil)
+            }
+        }
+    }
 }
+
+// MARK : - AuthenticationDelegate
 
 extension MainTabController: AuthenticationDelegate {
     func authenticationDidComplete() {
         fetchUser()
         self.dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - UITabBarControllerDelegate
+
+extension MainTabController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        let index = viewControllers?.firstIndex(of: viewController)
+//        if index == 2 {
+//            let controller = UINavigationController(rootViewController: UploadViewController())
+//            controller.modalPresentationStyle = .fullScreen
+//            present(controller, animated: true)
+//            return false
+//        }
+        if index == 2 {
+            var config = YPImagePickerConfiguration()
+            config.library.mediaType = .photo
+            config.shouldSaveNewPicturesToAlbum = false
+            config.hidesStatusBar = false
+            config.hidesStatusBar = false
+            config.screens = [.library]
+            config.library.maxNumberOfItems = 1
+            let picker = YPImagePicker(configuration: config)
+            picker.modalPresentationStyle = .fullScreen
+            present(picker, animated: true)
+            // 设置 Picker的回调方法
+            didFinishPickingMedia(picker)
+        }
+        return true
+    }
+}
+
+// MARK: - UploadPostControllerDelegate
+
+extension MainTabController: UploadPostControllerDelegate {
+    func controllerDidFinishUploadingPost(_ controller: UploadViewController) {
+        selectedIndex = 0
+        controller.dismiss(animated: true, completion: nil)
+        
+        guard let feedNav = viewControllers?.first as? UINavigationController else { return }
+        guard let feed = feedNav.viewControllers.first as? FeedController else {return }
+        feed.handleRefresh()
     }
 }

@@ -36,6 +36,7 @@ class ProfileHeader: UICollectionReusableView {
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Eddie Brock"
+        label.contentMode = .center
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()

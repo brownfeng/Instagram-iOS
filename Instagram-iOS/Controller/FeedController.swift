@@ -12,11 +12,17 @@ private let reuseIdentifier = "Cell"
 
 class FeedController: UICollectionViewController {
     
+    // MARK: - Properties
+    
+    var posts: [Post] = [Post]()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        
+        fetchPosts()
     }
     
     // MARK: - Helpers
@@ -25,6 +31,12 @@ class FeedController: UICollectionViewController {
         collectionView.backgroundColor = .white
         collectionView.register(FeedCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
+        
+        navigationItem.title = "Feed"
+        
+        let refresher = UIRefreshControl()
+        refresher.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        collectionView.refreshControl = refresher
     }
     
     // MARK: - Actions
@@ -41,17 +53,32 @@ class FeedController: UICollectionViewController {
             print("DEBUG: Failed to sign out")
         }
     }
+    
+    @objc
+    func handleRefresh() {
+        fetchPosts()
+    }
+    
+    // MARK: - API
+    func fetchPosts() {
+        PostService.fetchPosts { posts in
+            self.posts = posts
+            self.collectionView.refreshControl?.endRefreshing()
+            self.collectionView.reloadData()
+        }
+    }
 }
 
 // MARK: - UICollectionViewDataSource
 
 extension FeedController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+        return self.posts.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FeedCell
+        cell.viewModel = PostViewModel(post: self.posts[indexPath.row])
         return cell
     }
 }
