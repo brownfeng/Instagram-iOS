@@ -50,7 +50,7 @@ class SearchController: UITableViewController {
     func configureSearchController() {
         // 设置结果更新回调! searchText 的回调服务
         searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = true
+        searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = true
         searchController.searchBar.placeholder = "Search"
         navigationItem.searchController = searchController
