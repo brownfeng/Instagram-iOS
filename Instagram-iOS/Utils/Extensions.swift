@@ -138,5 +138,8 @@ extension UIViewController {
 }
 
 
-
-
+extension Bool {
+    mutating func toggle() {
+        self = !self
+    }
+}

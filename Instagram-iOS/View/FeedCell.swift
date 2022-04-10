@@ -10,11 +10,14 @@ import UIKit
 
 protocol FeedCellDelegate: AnyObject {
     func cell(_ cell: FeedCell, wantsToShowCommentsFor post: Post)
+    func cell(_ cell: FeedCell, didLike post: Post)
 }
 class FeedCell: UICollectionViewCell {
     
     var viewModel: PostViewModel? {
         didSet {
+            // 除了 set 方法, 还有 modify 方法也能触发!!!
+            // 一旦 viewModel 中有任何属性修改!!! 这里会触发!
             configure()
         }
     }
@@ -51,12 +54,11 @@ class FeedCell: UICollectionViewCell {
     }()
     
     // 必须是 lazy, 不然在 {} 中无法使用 self
-    private lazy var likeButton: UIButton = {
-        let button = UIButton(type: .system)
+    lazy var likeButton: UIButton = {
+        let button = UIButton(type: .custom)
         button.tintColor = .black
         button.setImage(UIImage(named: "like_unselected"), for: .normal)
         button.addTarget(self, action: #selector(didTapLikes), for: .touchUpInside)
-
         return button
     }()
     
@@ -140,7 +142,12 @@ class FeedCell: UICollectionViewCell {
     }
     
     @objc func didTapLikes() {
-        print("didTapUsername")
+        guard let viewModel = viewModel else {
+            return
+        }
+
+        self.likeButton.isSelected = !self.likeButton.isSelected
+        self.delegate?.cell(self, didLike: viewModel.post)
     }
     
     @objc func didTapComments() {
@@ -174,5 +181,7 @@ class FeedCell: UICollectionViewCell {
         usernameButton.setTitle(viewModel.username, for: .normal)
         
         likesLabel.text = viewModel.likesLabelText
+        likeButton.tintColor = viewModel.likeButtonTintColor
+        likeButton.setImage(viewModel.likeButtonImage, for: .normal)
     }
 }

@@ -14,7 +14,12 @@ class FeedController: UICollectionViewController {
     
     // MARK: - Properties
     
-    var posts: [Post] = [Post]()
+    var posts: [Post] = [Post]() {
+        // 会有一个 modify!!!!
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     var post: Post?
     
@@ -73,7 +78,18 @@ class FeedController: UICollectionViewController {
         PostService.fetchPosts { posts in
             self.posts = posts
             self.collectionView.refreshControl?.endRefreshing()
-            self.collectionView.reloadData()
+            self.checkIfUserLikedPosts()
+        }
+    }
+    
+    func checkIfUserLikedPosts() {
+        self.posts.forEach { post in
+            PostService.checkIfUserLikedPost(post: post) { didLike in
+                print("DEBUG: Post is \(post.caption) and user liked is \(didLike)")
+                if let index = self.posts.firstIndex(where: { $0.postId == post.postId}) {
+                    self.posts[index].didLike = didLike
+                }
+            }
         }
     }
 }
@@ -117,5 +133,28 @@ extension FeedController: FeedCellDelegate {
         self.navigationController?.pushViewController(commentVC, animated: true)
     }
     
+    // 单项数据流的思想
+    func cell(_ cell: FeedCell, didLike post: Post) {
+        // 触发 cell vm的didSet
+        cell.viewModel?.post.didLike.toggle()
+        if post.didLike {
+            print("DEBUG: Unlike post here ...")
+            PostService.unlikePost(post: post) { error in
+//                cell.likeButton.tintColor = .black
+//                cell.likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+                // 触发 cell vm的didSet
 
+                cell.viewModel?.post.likes = post.likes - 1
+            }
+        } else {
+            print("DEBUG: Like post here ...")
+            PostService.likePost(post: post) { error in
+                // 触发 cell vm的didSet
+                cell.viewModel?.post.likes = post.likes + 1
+//
+//                cell.likeButton.tintColor = .red
+//                cell.likeButton.setImage(UIImage(named: "like_selected"), for: .normal)
+            }
+        }
+    }
 }
