@@ -30,6 +30,10 @@
 		C045098527EA0AFE0082B673 /* FirebaseFirestore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C045097F27EA0AFE0082B673 /* FirebaseFirestore.xcframework */; };
 		C045098627EA0AFE0082B673 /* leveldb-library.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C045098027EA0AFE0082B673 /* leveldb-library.xcframework */; };
 		C045098727EA0AFE0082B673 /* gRPC-Core.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C045098127EA0AFE0082B673 /* gRPC-Core.xcframework */; };
+		C0568A9C2802DC7B00F89772 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0568A9B2802DC7B00F89772 /* NotificationCell.swift */; };
+		C0568A9E2802F7BB00F89772 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0568A9D2802F7BB00F89772 /* Notification.swift */; };
+		C0568AA02802F9A700F89772 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0568A9F2802F9A700F89772 /* NotificationService.swift */; };
+		C0568AA22803020200F89772 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0568AA12803020200F89772 /* NotificationViewModel.swift */; };
 		C096FD9227E6C86600074A81 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096FD9127E6C86600074A81 /* FeedController.swift */; };
 		C096FD9427E6C88000074A81 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096FD9327E6C88000074A81 /* SearchController.swift */; };
 		C096FD9627E6C88C00074A81 /* ImageSelectorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096FD9527E6C88C00074A81 /* ImageSelectorController.swift */; };
@@ -101,6 +105,10 @@
 		C045097F27EA0AFE0082B673 /* FirebaseFirestore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestore.xcframework; path = Carthage/Build/FirebaseFirestore.xcframework; sourceTree = "<group>"; };
 		C045098027EA0AFE0082B673 /* leveldb-library.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "leveldb-library.xcframework"; path = "Carthage/Build/leveldb-library.xcframework"; sourceTree = "<group>"; };
 		C045098127EA0AFE0082B673 /* gRPC-Core.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "gRPC-Core.xcframework"; path = "Carthage/Build/gRPC-Core.xcframework"; sourceTree = "<group>"; };
+		C0568A9B2802DC7B00F89772 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
+		C0568A9D2802F7BB00F89772 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		C0568A9F2802F9A700F89772 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		C0568AA12803020200F89772 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		C096FD9127E6C86600074A81 /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
 		C096FD9327E6C88000074A81 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		C096FD9527E6C88C00074A81 /* ImageSelectorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectorController.swift; sourceTree = "<group>"; };
@@ -279,6 +287,7 @@
 				C040F7EB27F3D25800BC8F9F /* User.swift */,
 				C0289D0B27FC226D00FC185E /* Post.swift */,
 				C0CF50422802A347003C2A6C /* Comment.swift */,
+				C0568A9D2802F7BB00F89772 /* Notification.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -293,6 +302,7 @@
 				C01E749527FC8ADE00C93490 /* CommentCell.swift */,
 				C01E74972801077300C93490 /* CommentInputAccesoryView.swift */,
 				C0CF503E280286FB003C2A6C /* CustomKeyboardView.swift */,
+				C0568A9B2802DC7B00F89772 /* NotificationCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -305,6 +315,7 @@
 				C0289D0327FB248000FC185E /* UserCellViewModel.swift */,
 				C0289D0D27FC27CE00FC185E /* PostViewModel.swift */,
 				C0CF50442802A825003C2A6C /* CommentViewModel.swift */,
+				C0568AA12803020200F89772 /* NotificationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -333,6 +344,7 @@
 				C01D7CB827F3511000100B84 /* UserService.swift */,
 				C0289D0927FC19A100FC185E /* PostService.swift */,
 				C0CF50402802A005003C2A6C /* CommentService.swift */,
+				C0568A9F2802F9A700F89772 /* NotificationService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -526,6 +538,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0CF50452802A825003C2A6C /* CommentViewModel.swift in Sources */,
+				C0568AA22803020200F89772 /* NotificationViewModel.swift in Sources */,
 				C096FDA327E6FE0300074A81 /* CustomTextFiled.swift in Sources */,
 				C096FDA127E6F7E800074A81 /* LoginController.swift in Sources */,
 				C0CF503F280286FB003C2A6C /* CustomKeyboardView.swift in Sources */,
@@ -537,6 +550,7 @@
 				C0F19F4127E6C60800CB6A0B /* AppDelegate.swift in Sources */,
 				C0CF50412802A005003C2A6C /* CommentService.swift in Sources */,
 				C0CF50432802A347003C2A6C /* Comment.swift in Sources */,
+				C0568A9E2802F7BB00F89772 /* Notification.swift in Sources */,
 				C096FDA727E70D6F00074A81 /* AuthenticationViewModel.swift in Sources */,
 				C096FD9A27E6C8A000074A81 /* ProfileController.swift in Sources */,
 				C096FD9E27E6D98300074A81 /* Extensions.swift in Sources */,
@@ -555,10 +569,12 @@
 				C01D7CBB27F3512500100B84 /* Constants.swift in Sources */,
 				C040F7EC27F3D25800BC8F9F /* User.swift in Sources */,
 				C096FD9C27E6D83B00074A81 /* FeedCell.swift in Sources */,
+				C0568AA02802F9A700F89772 /* NotificationService.swift in Sources */,
 				C040F7EE27F4964D00BC8F9F /* ProfileHeaderViewModel.swift in Sources */,
 				C01D7CB627F33C7C00100B84 /* ProfileCell.swift in Sources */,
 				C01E749627FC8ADE00C93490 /* CommentCell.swift in Sources */,
 				C096FDA527E7016100074A81 /* RegistrationController.swift in Sources */,
+				C0568A9C2802DC7B00F89772 /* NotificationCell.swift in Sources */,
 				C0289D0827FC068500FC185E /* InputTextView.swift in Sources */,
 				C09B1ACC27E72B5F005BE12F /* AuthService.swift in Sources */,
 			);

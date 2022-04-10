@@ -144,6 +144,10 @@ extension FeedController: FeedCellDelegate {
     
     // 单项数据流的思想
     func cell(_ cell: FeedCell, didLike post: Post) {
+        
+        guard let tab = tabBarController as? MainTabController else {return}
+        guard let user = tab.user else { return }
+        
         // 触发 cell vm的didSet
         cell.viewModel?.post.didLike.toggle()
         if post.didLike {
@@ -163,6 +167,13 @@ extension FeedController: FeedCellDelegate {
 //
 //                cell.likeButton.tintColor = .red
 //                cell.likeButton.setImage(UIImage(named: "like_selected"), for: .normal)
+                
+                
+                
+                NotificationService.uploadNotification(toUid: post.ownerUid,
+                                                       fromUser: user,
+                                                       type: .like,
+                                                       post: post)
             }
         }
     }

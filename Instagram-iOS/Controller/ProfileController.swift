@@ -13,7 +13,11 @@ class ProfileController: UICollectionViewController {
     
     // MARK: - Properties
     
-    private var user: User
+    private var user: User {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     private var posts: [Post] = [Post]()
         
@@ -137,20 +141,24 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
 
 extension ProfileController: ProfileHeaderDelegate {
     func header(_ profileHeader: ProfileHeader, didTapActionButtonFor user: User) {
+        guard let tab = tabBarController as? MainTabController else { return }
+        guard let currentUser = tab.user else { return }
+
         if user.isCurrentUser {
             print("DEBUG: Show edit profile here..." )
         } else if user.isFollowed {
             print("DEBUG: Handle unfollow user here...")
             UserService.unfollow(uid: user.uid) { error in
                 self.user.isFollowed = false
-                self.collectionView.reloadData()
             }
         } else {
             UserService.followUser(uid: user.uid) { error in
                 print("DEBUG: Follow user here...")
                 self.user.isFollowed = true
-                self.collectionView.reloadData()
+                NotificationService.uploadNotification(toUid: user.uid, fromUser: currentUser, type: .follow)
             }
+            
+            
         }
     }
 }
