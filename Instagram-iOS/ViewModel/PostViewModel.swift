@@ -9,7 +9,7 @@ import Foundation
 
 // 针对某个模型的 ViewModel 服务
 struct PostViewModel {
-    private let post: Post
+    let post: Post
     
     var imageUrl: URL? { return URL(string: post.imageUrl)}
     var userProfileImageUrl: URL? { return URL(string: post.ownerImageUrl) }

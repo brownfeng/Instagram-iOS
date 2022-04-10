@@ -8,6 +8,9 @@
 import Foundation
 import UIKit
 
+protocol FeedCellDelegate: AnyObject {
+    func cell(_ cell: FeedCell, wantsToShowCommentsFor post: Post)
+}
 class FeedCell: UICollectionViewCell {
     
     var viewModel: PostViewModel? {
@@ -15,6 +18,8 @@ class FeedCell: UICollectionViewCell {
             configure()
         }
     }
+    
+    weak var delegate: FeedCellDelegate?
     
     // MARK: - Properties
     
@@ -50,6 +55,8 @@ class FeedCell: UICollectionViewCell {
         let button = UIButton(type: .system)
         button.tintColor = .black
         button.setImage(UIImage(named: "like_unselected"), for: .normal)
+        button.addTarget(self, action: #selector(didTapLikes), for: .touchUpInside)
+
         return button
     }()
     
@@ -58,6 +65,7 @@ class FeedCell: UICollectionViewCell {
         let button = UIButton(type: .system)
         button.tintColor = .black
         button.setImage(UIImage(named: "comment"), for: .normal)
+        button.addTarget(self, action: #selector(didTapComments), for: .touchUpInside)
         return button
     }()
     
@@ -66,6 +74,7 @@ class FeedCell: UICollectionViewCell {
         let button = UIButton(type: .system)
         button.tintColor = .black
         button.setImage(UIImage(named: "send2"), for: .normal)
+        button.addTarget(self, action: #selector(didTapUsername), for: .touchUpInside)
         return button
     }()
     
@@ -128,6 +137,18 @@ class FeedCell: UICollectionViewCell {
     
     @objc func didTapUsername() {
         print("didTapUsername")
+    }
+    
+    @objc func didTapLikes() {
+        print("didTapUsername")
+    }
+    
+    @objc func didTapComments() {
+        guard let viewModel = viewModel else {
+            return
+        }
+
+        self.delegate?.cell(self, wantsToShowCommentsFor: viewModel.post)
     }
     
     // MARK: - Helpers

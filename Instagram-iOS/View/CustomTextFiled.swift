@@ -12,7 +12,6 @@ class CustomTextFiled: UITextField {
     
     // MARK: - Properties
     
-    
     // MARK: - Lifecycle
     
     init(placeholder: String) {
@@ -26,7 +25,7 @@ class CustomTextFiled: UITextField {
         textColor = .white
         keyboardAppearance = .dark
         backgroundColor = UIColor(white: 1, alpha:  0.1)
-        setHeight( 50)
+        setHeight(50) // 默认只有一个 导读约束
         attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.foregroundColor: UIColor(white: 1.0, alpha: 0.7)])
     }
     
