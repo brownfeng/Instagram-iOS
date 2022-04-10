@@ -14,6 +14,7 @@ class FeedController: UICollectionViewController {
     
     // MARK: - Properties
     
+    // 这里也是 任何时候 posts 中的属性发送变化, 这里就会调用
     var posts: [Post] = [Post]() {
         // 会有一个 modify!!!!
         didSet {
@@ -87,6 +88,7 @@ class FeedController: UICollectionViewController {
             PostService.checkIfUserLikedPost(post: post) { didLike in
                 print("DEBUG: Post is \(post.caption) and user liked is \(didLike)")
                 if let index = self.posts.firstIndex(where: { $0.postId == post.postId}) {
+                    // 触发 posts 的 didSet 方法
                     self.posts[index].didLike = didLike
                 }
             }
@@ -131,6 +133,13 @@ extension FeedController: FeedCellDelegate {
     func cell(_ cell: FeedCell, wantsToShowCommentsFor post: Post) {
         let commentVC = CommentController(post: post)
         self.navigationController?.pushViewController(commentVC, animated: true)
+    }
+    
+    func cell(_ cell: FeedCell, wantsToShowProfileFor uid: String) {
+        UserService.fetchUser(withUid: uid) { user in
+            let controller = ProfileController(user: user)
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
     }
     
     // 单项数据流的思想
