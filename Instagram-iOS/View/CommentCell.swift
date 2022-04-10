@@ -30,6 +30,7 @@ class CommentCell: UICollectionViewCell {
     
     private let commentLabel: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         return label
     }()
     
@@ -45,8 +46,7 @@ class CommentCell: UICollectionViewCell {
         
         addSubview(commentLabel)
         commentLabel.centerY(inView: profileImageView, leftAnchor: profileImageView.rightAnchor, paddingLeft: 8)
-        
-        
+        commentLabel.anchor(right: rightAnchor, paddingRight: 8)
     }
     
     required init?(coder: NSCoder) {
